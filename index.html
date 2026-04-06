@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1강 | 내 컴퓨터에 개발자 앉히기</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;600;700;900&display=swap');
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Noto Sans KR', sans-serif; background: #f5f6fa; color: #333; }
+
+        /* 히어로 */
+        .hero {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #fff;
+            text-align: center;
+            padding: 80px 24px 60px;
+        }
+        .hero .label {
+            display: inline-block;
+            background: #e94560;
+            color: #fff;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 4px 14px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+        }
+        .hero h1 { font-size: 36px; font-weight: 900; margin-bottom: 12px; }
+        .hero p { font-size: 16px; color: rgba(255,255,255,0.7); }
+
+        .container { max-width: 800px; margin: 0 auto; padding: 32px 20px; }
+
+        /* 일정 카드 */
+        .schedule {
+            background: #fff;
+            border-radius: 16px;
+            padding: 28px 32px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+        .schedule h2 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .schedule h2::before {
+            content: '';
+            width: 4px;
+            height: 20px;
+            background: #4A90D9;
+            border-radius: 2px;
+        }
+        .timeline { list-style: none; }
+        .timeline li {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 15px;
+        }
+        .timeline li:last-child { border-bottom: none; }
+        .timeline .num {
+            width: 28px;
+            height: 28px;
+            background: #4A90D9;
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        .timeline .break-tag {
+            background: #f0f0f0;
+            color: #888;
+            font-size: 12px;
+            padding: 2px 10px;
+            border-radius: 10px;
+            margin-left: auto;
+        }
+
+        /* 섹션 카드 */
+        .card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 28px 32px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+        .card h2 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+        .card p {
+            font-size: 14px;
+            line-height: 1.8;
+            color: #555;
+        }
+
+        /* 4강 로드맵 */
+        .roadmap {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-top: 16px;
+        }
+        .roadmap-item {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px 16px;
+            text-align: center;
+        }
+        .roadmap-item.active {
+            background: #fff3e6;
+            border: 2px solid #E8833A;
+        }
+        .roadmap-item .week {
+            font-size: 24px;
+            font-weight: 900;
+            color: #E8833A;
+        }
+        .roadmap-item .week-title {
+            font-size: 13px;
+            font-weight: 600;
+            margin: 8px 0 6px;
+        }
+        .roadmap-item .week-desc {
+            font-size: 11px;
+            color: #888;
+            line-height: 1.6;
+        }
+
+        /* 용어 */
+        .terms {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 12px;
+        }
+        .term-box {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+        .term-box .term { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+        .term-box .desc { font-size: 13px; color: #888; }
+
+        /* 실습 */
+        .practice-list { list-style: none; margin-top: 12px; }
+        .practice-list li {
+            padding: 12px 16px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .practice-list .icon {
+            font-size: 18px;
+        }
+
+        /* 다음 강의 */
+        .next-lecture {
+            background: linear-gradient(135deg, #16213e, #0f3460);
+            color: #fff;
+            border-radius: 16px;
+            padding: 32px;
+            text-align: center;
+        }
+        .next-lecture h2 { font-size: 20px; margin-bottom: 8px; }
+        .next-lecture .date { font-size: 14px; color: rgba(255,255,255,0.7); margin-bottom: 16px; }
+        .next-lecture ul {
+            list-style: none;
+            text-align: left;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        .next-lecture li {
+            font-size: 14px;
+            padding: 6px 0;
+            color: rgba(255,255,255,0.9);
+        }
+        .next-lecture li::before {
+            content: '- ';
+            color: #E8833A;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 24px;
+            font-size: 12px;
+            color: #bbb;
+        }
+
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 26px; }
+            .roadmap { grid-template-columns: repeat(2, 1fr); }
+            .terms { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 히어로 -->
+    <div class="hero">
+        <span class="label">1강</span>
+        <h1>내 컴퓨터에 개발자 앉히기</h1>
+        <p>바이브코딩 워크숍 | 비개발자를 위한 AI 코딩 입문</p>
+    </div>
+
+    <div class="container">
+
+        <!-- 오늘의 일정 -->
+        <div class="schedule">
+            <h2>오늘의 일정</h2>
+            <ol class="timeline">
+                <li><span class="num">1</span> 강사소개</li>
+                <li><span class="num">2</span> 클로드 코드 이해하기</li>
+                <li><span class="num">3</span> 클로드 데스크탑 설치</li>
+                <li><span class="num">4</span> 실습 1: 바이브코딩으로 '김비서' 개발하기</li>
+                <li><span class="num">5</span> 용어 이해하기 (HTML / 로컬서버) <span class="break-tag">쉬는 시간</span></li>
+                <li><span class="num">6</span> 실습 2: 바이브코딩으로 업무 가속화하기</li>
+                <li><span class="num">7</span> 정리하기</li>
+                <li><span class="num">8</span> Q&A + 자유 실습</li>
+            </ol>
+        </div>
+
+        <!-- 바이브코딩이란? -->
+        <div class="card">
+            <h2>바이브코딩(Vibe Coding)이란?</h2>
+            <p>
+                기존 코딩: C#, C++, 파이썬, 자바 등 프로그래밍 언어를 직접 작성<br>
+                바이브코딩: 자연어(한국어)로 원하는 것을 설명하면, AI가 코드로 변환하여 결과물을 만들어주는 방식
+            </p>
+        </div>
+
+        <!-- 핵심 메시지 -->
+        <div class="card" style="text-align: center; background: #fff3e6;">
+            <h2 style="font-size: 22px; color: #E8833A;">끝내주는 기획만 있다면<br>당신도 끝내주는 개발자!</h2>
+            <p style="margin-top: 8px;">개발자가 아니어도 됩니다. 중요한 건 아이디어입니다.</p>
+        </div>
+
+        <!-- 일반 클로드 vs 클로드 코드 -->
+        <div class="card">
+            <h2>일반 클로드 vs 클로드 코드</h2>
+            <div class="terms">
+                <div class="term-box">
+                    <div class="term">일반 Claude / GPT</div>
+                    <div class="desc">텍스트, 이미지, PDF 전달<br>리서치 / 문자 전달 / 이미지 생성</div>
+                </div>
+                <div class="term-box" style="border: 2px solid #4A90D9;">
+                    <div class="term">Claude Code</div>
+                    <div class="desc">폴더 공유 → 프로젝트를 스스로 서치<br>결과물을 폴더에 직접 생성 + 바이브코딩</div>
+                </div>
+            </div>
+            <p style="margin-top: 12px; font-size: 13px; color: #888;">
+                생성 가능: 워드, 엑셀, PDF, HTML, PPT, 데이터 기반 그래프 이미지(PNG, JPG)<br>
+                불가능: 생성형 이미지, 영상
+            </p>
+        </div>
+
+        <!-- 용어 정리 -->
+        <div class="card">
+            <h2>용어 짚고 넘어가기</h2>
+            <div class="terms">
+                <div class="term-box">
+                    <div class="term">HTML</div>
+                    <div class="desc">코딩 언어로 쓰인 설계도</div>
+                </div>
+                <div class="term-box">
+                    <div class="term">로컬 서버</div>
+                    <div class="desc">지금 내 컴퓨터 서버</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 실습 내용 -->
+        <div class="card">
+            <h2>실습 내용</h2>
+            <ul class="practice-list">
+                <li><span class="icon">1.</span> 실습 폴더 다운로드 & 클로드 코드에 연결</li>
+                <li><span class="icon">2.</span> 김비서 업무 대시보드 만들기 (HTML)</li>
+                <li><span class="icon">3.</span> 파일 분석 (회의록, 매출데이터 → 보고서)</li>
+                <li><span class="icon">4.</span> 클로드인크롬: 브라우저 반복 작업 자동화</li>
+                <li><span class="icon">5.</span> SVG 다이어그램 만들기</li>
+            </ul>
+        </div>
+
+        <!-- 4강 로드맵 -->
+        <div class="card">
+            <h2>4강으로 완성하는 바이브코딩</h2>
+            <div class="roadmap">
+                <div class="roadmap-item active">
+                    <div class="week">1강</div>
+                    <div class="week-title">오늘</div>
+                    <div class="week-desc">AI 개발자 앉히기<br>Claude Code 설치<br>실전 업무 자동화</div>
+                </div>
+                <div class="roadmap-item">
+                    <div class="week" style="color: #333;">2강</div>
+                    <div class="week-title">세상에 내보내기</div>
+                    <div class="week-desc">GitHub → Vercel<br>웹사이트 배포</div>
+                </div>
+                <div class="roadmap-item">
+                    <div class="week" style="color: #333;">3강</div>
+                    <div class="week-title">외부와 연결하기</div>
+                    <div class="week-desc">API 연동, MCP<br>살아있는 서비스</div>
+                </div>
+                <div class="roadmap-item">
+                    <div class="week" style="color: #333;">4강</div>
+                    <div class="week-title">계속 만들기</div>
+                    <div class="week-desc">멀티 에이전트<br>협업, 독립 역량</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 다음 강의 안내 -->
+        <div class="next-lecture">
+            <h2>2강 | 만든 걸 세상에 내보내기</h2>
+            <div class="date">4월 00일 7시 30분 | 누리꿈스퀘어 연구개발타워 6층</div>
+            <ul>
+                <li>GitHub & Vercel 개념 잡기</li>
+                <li>내 아이디어를 실제 웹페이지/서비스로 만들기</li>
+                <li>Vercel로 전 세계에 배포하기</li>
+                <li>마크다운 사용법 & CLAUDE.md 작성법</li>
+                <li>커스텀 슬래시 명령어 만들기</li>
+            </ul>
+        </div>
+
+        <div class="footer">바이브코딩 워크숍 | 서만호</div>
+    </div>
+
+</body>
+</html>
