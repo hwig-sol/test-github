@@ -47,7 +47,24 @@
             color: #fff;
             text-align: center;
             padding: 60px 24px 50px;
+            position: relative;
+            overflow: hidden;
         }
+        #particles {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+        }
+        .hero .label, .hero h1, .hero p { position: relative; z-index: 1; }
+        .typing-cursor {
+            display: inline-block;
+            width: 3px;
+            background: #E8833A;
+            margin-left: 4px;
+            animation: blink 0.7s infinite;
+        }
+        @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
         .hero .label {
             display: inline-block;
             background: #e94560;
@@ -178,8 +195,9 @@
 
     <!-- 히어로 -->
     <div class="hero">
+        <canvas id="particles"></canvas>
         <span class="label">1강</span>
-        <h1>내 컴퓨터에 개발자 앉히기</h1>
+        <h1 id="typing-target"></h1>
         <p>바이브코딩 워크숍 | 비개발자를 위한 AI 코딩 입문</p>
     </div>
 
@@ -252,5 +270,58 @@
         <div class="footer">바이브코딩 워크숍 | 서만호</div>
     </div>
 
+    <script>
+    // 타이핑 효과
+    const text = "내 컴퓨터에 개발자 앉히기";
+    const target = document.getElementById('typing-target');
+    let i = 0;
+    function typeChar() {
+        if (i < text.length) {
+            target.textContent = text.slice(0, i + 1);
+            i++;
+            setTimeout(typeChar, 100);
+        }
+    }
+    typeChar();
+
+    // 파티클 배경
+    const canvas = document.getElementById('particles');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    function resize() {
+        canvas.width = canvas.parentElement.offsetWidth;
+        canvas.height = canvas.parentElement.offsetHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    for (let j = 0; j < 40; j++) {
+        particles.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            r: Math.random() * 2 + 1,
+            dx: (Math.random() - 0.5) * 0.5,
+            dy: (Math.random() - 0.5) * 0.5,
+            a: Math.random() * 0.5 + 0.2
+        });
+    }
+
+    function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => {
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(255,255,255,${p.a})`;
+            ctx.fill();
+            p.x += p.dx;
+            p.y += p.dy;
+            if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
+            if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
+        });
+        requestAnimationFrame(draw);
+    }
+    draw();
+    </script>
 </body>
 </html>
