@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__e66c1133-776f-4feb-b9d2-e0d009e8c00d__github_list_files",
+      "mcp__e66c1133-776f-4feb-b9d2-e0d009e8c00d__github_read_file",
+      "Bash(python -c \":*)",
+      "Bash(node -e \":*)",
+      "Bash(pip install:*)",
+      "Bash(fc-list :lang=ko family)",
+      "Read(//c/Windows/Fonts/**)",
+      "Bash(python create_pdf.py)",
+      "Bash(python3 create_pdf.py)",
+      "Bash(py create_pdf.py)",
+      "Bash(/c/Users/HelloVR/AppData/Local/Microsoft/WindowsApps/python --version)",
+      "Bash(cmd.exe /c \"python --version\")",
+      "Bash(npm install:*)",
+      "Bash(node create_pdf.js)",
+      "Bash(node create_chart.js)",
+      "WebSearch"
+    ]
+  }
+}
